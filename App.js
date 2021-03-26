@@ -1,112 +1,92 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import 'react-native-gesture-handler';
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import Home from './src/containers/pages/Home'
+import Details from './src/containers/pages/Details'
+import Liked from './src/containers/pages/Liked'
+import Profile from './src/containers/pages/Profile'
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+import colors from './src/colors'
+import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import COLORS from './src/colors';
+
+Entypo.loadFont()
+MaterialCommunityIcons.loadFont()
+
+const Stack = createStackNavigator()
+const Tab = createBottomTabNavigator()
+
+const TabNavigator = () => {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+    <Tab.Navigator 
+    tabBarOptions={{
+      style: styles.tabBar,
+      activeTintColor: COLORS.orange,
+      inactiveTintColor: COLORS.gray,
+      showLabel:false
+    }}
+    >
+      <Tab.Screen 
+      name='Home'
+      component={Home}
+      options={{
+        tabBarIcon: ({color}) => (
+          <Entypo name='home' size={32} color={color}/>
+        )
+      }}
+      />
+      <Tab.Screen 
+      name='Liked'
+      component={Liked}
+      options={{
+        tabBarIcon: ({color}) => (
+          <Entypo name='heart' size={32} color={color}/>
+        )
+      }}
+      />
+      <Tab.Screen 
+      name='Profile'
+      component={Profile}
+      options={{
+        tabBarIcon: ({color}) => (
+          <MaterialCommunityIcons name='account' size={32} color={color}/>
+        )
+      }}
+      />
+    </Tab.Navigator>
+  )
+}
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+const App = () => {
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen 
+        name="TabNavigator"
+        component={TabNavigator}
+        options={{headerShown:false}}/>
+        <Stack.Screen 
+        name="Details"
+        component={Details}
+        options={{headerShown:false}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+}
+
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+  tabBar:{
+    backgroundColor:COLORS.white,
+    borderTopLeftRadius:20,
+    borderTopRightRadius:20
+  }
+})
+export default App
 
-export default App;

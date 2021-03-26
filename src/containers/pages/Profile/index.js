@@ -1,14 +1,14 @@
 import React from 'react'
 import { View, Text, SafeAreaView } from 'react-native'
 
-const Details = () => {
+const Profile = () => {
     return (
         <View>
             <SafeAreaView>
-                <Text>Details</Text>
+                <Text>This is Profile</Text>
             </SafeAreaView>
         </View>
     )
 }
 
-export default Details
+export default Profile
