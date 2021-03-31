@@ -1,5 +1,7 @@
 import React from 'react'
 import { View, Text, SafeAreaView, Button, ScrollView, StyleSheet, Image, FlatList, ImageBackground, TouchableOpacity } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import discoverData from '../../../assets/data/discoverData'
 import activitiesData from '../../../assets/data/activitiesData'
@@ -15,253 +17,253 @@ Entypo.loadFont()
 Feather.loadFont()
 
 const Home = ({navigation}) => {
-
-    const renderDiscover = ({item}) => {
-        return(
-            <TouchableOpacity>
-                <ImageBackground
-                source={item.image}
-                style={[
-                    styles.discoverImageWrapper,{
-                        marginLeft: item.id === 'discover-1' ? 20 : 0
-                    }
-                ]}
-                imageStyle={styles.discoverImage}
-                >
-                    <Text style={styles.discoverImageTitle}>{item.title}</Text>
-                    <View style={styles.locationWrapper}>
-                        <Entypo name='location-pin' size={18} color={COLORS.white}/>
-                        <Text style={styles.locationText}>{item.location}</Text>
-                    </View>
-                </ImageBackground>
-            </TouchableOpacity>
-        )
-    }
-
-    const renderActivities = ({item}) => {
-        return(
-            <View style={styles.activityWrapper}>
-                <Image source={item.image} style={styles.activityImage}/>
-                <Text style={styles.activityTitle}>{item.title}</Text>
+    const renderDiscoverItem = ({item}) => {
+      return (
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Details', {
+              item: item,
+            })
+          }>
+          <ImageBackground
+            source={item.image}
+            style={[
+              styles.discoverItem,
+              {marginLeft: item.id === 'discover-1' ? 20 : 0},
+            ]}
+            imageStyle={styles.discoverItemImage}>
+            <Text style={styles.discoverItemTitle}>{item.title}</Text>
+            <View style={styles.discoverItemLocationWrapper}>
+              <Entypo name="location-pin" size={18} color={COLORS.white} />
+              <Text style={styles.discoverItemLocationText}>{item.location}</Text>
             </View>
-        )
-    }
-
-    const renderLearnMore = ({item}) => {
-        return (
-            <TouchableOpacity>
-                <ImageBackground
-                source={item.image}
-                style={[
-                    styles.learnImageWrapper,{
-                        marginLeft: item.id === 'learnMore-1' ? 20 : 0
-                    }
-                ]}
-                imageStyle={styles.learnImage}
-                >
-                <Text style={styles.learnText}>{item.title}</Text>
-                </ImageBackground>
-            </TouchableOpacity>
-        )
-    }
-    return (
-        <View style={StyleSheet.container}>
-            <ScrollView contentInsetAdjustmentBehavior='automatic' showsVerticalScrollIndicator={false}>
-                <SafeAreaView>
-                    <View style={styles.headerWrapper}>
-                        <Feather
-                        name='menu'
-                        size={32}
-                        color={COLORS.black}
-                        />
-                        <Image source={profile} style={styles.profileImage}/>
-                    </View>
-                </SafeAreaView>
-
-                {/* discover */}
-                <View style={styles.discoverWrapper}>
-                    <Text style={styles.discoverTitle}>Discover</Text>
-                    <View style={styles.discoverCategoriesWrapper}>
-                        <Text style={styles.discoverCategoriesText}>All</Text>
-                        <Text style={styles.discoverCategoriesText}>Destinations</Text>
-                        <Text style={styles.discoverCategoriesText}>Cities</Text>
-                        <Text style={styles.discoverCategoriesText}>Experiences</Text>
-                    </View>
-                    <View style={styles.discoverItemsWrapper}>
-                        <FlatList 
-                        data={discoverData}
-                        renderItem={renderDiscover}
-                        keyExtractor={(item) => item.id}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        />
-                    </View>
-                </View>
-
-                {/* activities */}
-                <View style={styles.activitiesWrapper}>
-                    <Text style={styles.activitiesTitle}>Activities</Text>
-                    <View style={styles.activitiesItem}>
-                        <FlatList
-                        data={activitiesData}
-                        renderItem={renderActivities}
-                        keyExtractor={(item) => item.id}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        />
-                    </View>
-                </View>
-
-                {/* Learn More */}
-                <View style={styles.learnWrapper}>
-                    <Text style={styles.learnTitle}>Learn More</Text>
-                    <View style={[styles.learnItemWrapper]}>
-                        <FlatList
-                        data={learnMoreData}
-                        renderItem={renderLearnMore}
-                        keyExtractor={(item) => item.id}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        />
-                    </View>
-                </View>
-            </ScrollView>
+          </ImageBackground>
+        </TouchableOpacity>
+      );
+    };
+  
+    const renderActivityItem = ({item}) => {
+      return (
+        <View
+          style={[
+            styles.activityItemWrapper,
+            {
+              marginLeft: item.id === 'activities-1' ? 20 : 0,
+            },
+          ]}>
+          <Image source={item.image} style={styles.activityItemImage} />
+          <Text style={styles.activityItemText}>{item.title}</Text>
         </View>
-    )
-}
-const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        backgroundColor:COLORS.white
+      );
+    };
+  
+    const renderLearnMoreItem = ({item}) => {
+      return (
+        <ImageBackground
+          source={item.image}
+          style={[
+            styles.learnMoreItem,
+            {
+              marginLeft: item.id === 'learnMore-1' ? 20 : 0,
+            },
+          ]}
+          imageStyle={styles.learnMoreItemImage}>
+          <Text style={styles.learnMoreItemText}>{item.title}</Text>
+        </ImageBackground>
+      );
+    };
+  
+    return (
+      <View style={styles.container}>
+        <ScrollView contentInsetAdjustmentBehavior='automatic' showsVerticalScrollIndicator={false}>
+          {/* Header */}
+          <SafeAreaView>
+            <View style={styles.menuWrapper}>
+              <Feather
+                name="menu"
+                size={32}
+                color={COLORS.black}
+                style={styles.menuIcon}
+              />
+              <Image source={profile} style={styles.profileImage} />
+            </View>
+          </SafeAreaView>
+  
+          {/* Discover */}
+          <View style={styles.discoverWrapper}>
+            <Text style={styles.discoverTitle}>Discover</Text>
+            <View style={styles.discoverCategoriesWrapper}>
+              <Text style={[styles.discoverCategoryText, {color: COLORS.orange}]}>
+                All
+              </Text>
+              <Text style={styles.discoverCategoryText}>Destinations</Text>
+              <Text style={styles.discoverCategoryText}>Cities</Text>
+              <Text style={styles.discoverCategoryText}>Experiences</Text>
+            </View>
+            <View style={styles.discoverItemsWrapper}>
+              <FlatList
+                data={discoverData}
+                renderItem={renderDiscoverItem}
+                keyExtractor={(item) => item.id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />
+            </View>
+          </View>
+  
+          {/* Activities */}
+          <View style={styles.activitiesWrapper}>
+            <Text style={styles.activitiesTitle}>Activities</Text>
+            <View style={styles.activitiesItemsWrapper}>
+              <FlatList
+                data={activitiesData}
+                renderItem={renderActivityItem}
+                keyExtractor={(item) => item.id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />
+            </View>
+          </View>
+  
+          {/* Learn More */}
+          <View style={styles.learnMoreWrapper}>
+            <Text style={styles.learnMoreTitle}>Learn More</Text>
+            <View style={styles.learnMoreItemsWrapper}>
+              <FlatList
+                data={learnMoreData}
+                renderItem={renderLearnMoreItem}
+                keyExtractor={(item) => item.id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+    );
+  };
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      color: COLORS.white,
     },
-    headerWrapper:{
-        flexDirection:'row',
-        justifyContent:'space-between',
-        marginHorizontal:20,
-        marginTop:20,
-        alignItems:'center'
+    menuWrapper: {
+      marginHorizontal: 20,
+      marginTop: 20,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
-    profileImage:{
-        height:52,
-        width:52,
-        borderRadius:10
+    profileImage: {
+      width: 52,
+      height: 52,
+      borderRadius: 10,
     },
-    discoverWrapper:{
-        marginTop:20,
+    discoverWrapper: {
+      // marginHorizontal: 20,
+      marginTop: 20,
     },
-    discoverTitle:{
-        // fontFamily:'Lato-Bold',
-        fontSize:24,
-        color: COLORS.black,
-        marginHorizontal:20,
-        fontWeight:'600'
+    discoverTitle: {
+      marginHorizontal: 20,
+    //   fontFamily: 'Lato-Bold',
+      fontSize: 32,
     },
-    discoverImageTitle:{
-        fontSize:16,
-        color:COLORS.white,
-        fontWeight:'600'
+    discoverCategoriesWrapper: {
+      marginHorizontal: 20,
+      flexDirection: 'row',
+      marginTop: 20,
     },
-    discoverCategoriesWrapper:{
-        flexDirection:"row",
-        marginTop:20,
-        marginHorizontal:20,
+    discoverCategoryText: {
+      marginRight: 30,
+    //   fontFamily: 'Lato-Regular',
+      fontSize: 16,
+      color: COLORS.gray,
     },
-    discoverCategoriesText:{
-        // fontFamily:'Lato-Regular',
-        fontSize:16,
-        marginRight:30,
-        color:COLORS.gray,
+    discoverItemsWrapper: {
+      paddingVertical: 20,
     },
-    discoverItemsWrapper:{
-        marginTop:20,
+    discoverItem: {
+      width: 170,
+      height: 250,
+      justifyContent: 'flex-end',
+      paddingHorizontal: 10,
+      paddingVertical: 15,
+      marginRight: 20,
     },
-    discoverImageWrapper:{
-        width: 170,
-        height: 250,
-        justifyContent:'flex-end',
-        paddingVertical:15,
-        paddingHorizontal:10,
-        borderRadius:50,
-        marginRight:20,
-        borderRadius:20,
+    discoverItemImage: {
+      borderRadius: 20,
     },
-    discoverImage:{
-        borderRadius:20
+    discoverItemTitle: {
+    //   fontFamily: 'Lato-Bold',
+      fontSize: 18,
+      color: COLORS.white,
     },
-    locationWrapper:{
-        flexDirection:'row',
-        alignItems:'center',
-        paddingTop:10
+    discoverItemLocationWrapper: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: 5,
     },
-    locationText:{
-        color:COLORS.white,
-        fontSize:12,
-        paddingLeft:5,
-        alignItems:'center',
-        justifyContent:'center',
-        fontWeight:'600'
+    discoverItemLocationText: {
+      marginLeft: 5,
+    //   fontFamily: 'Lato-Bold',
+      fontSize: 14,
+      color: COLORS.white,
     },
-    activityWrapper:{
-        marginRight:20,
-        alignItems:'center',
-        justifyContent:'flex-end',
-        marginHorizontal:20
+    activitiesWrapper: {
+      marginTop: 10,
     },
-    activityImage:{
-        width:36,
-        justifyContent:'flex-end'
+    activitiesTitle: {
+      marginHorizontal: 20,
+    //   fontFamily: 'Lato-Bold',
+      fontSize: 24,
+      color: COLORS.black,
     },
-    activityTitle:{
-        fontSize:14,
-        color:COLORS.gray,
-        fontWeight:'400',
-        paddingTop:10,
+    activitiesItemsWrapper: {
+      paddingVertical: 20,
     },
-    activitiesWrapper:{
-        marginTop:30,
-        // paddingHorizontal:20
+    activityItemWrapper: {
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+      marginRight: 20,
     },
-    activitiesTitle:{
-        fontSize:24,
-        fontWeight:'600',
-        color:COLORS.black,
-        marginHorizontal:20
+    activityItemImage: {
+      width: 36,
     },
-    activitiesItem:{
-        paddingVertical:20,
-        justifyContent:'flex-end'
+    activityItemText: {
+      marginTop: 5,
+    //   fontFamily: 'Lato-Bold',
+      fontSize: 14,
+      color: COLORS.gray,
     },
-    learnImageWrapper:{
-        paddingVertical:20,
-        paddingHorizontal:10,
-        width: 170,
-        height: 180,
-        justifyContent: 'flex-end',
-        marginRight: 20,
+    learnMoreWrapper: {
+      marginTop: 10,
     },
-    learnImage:{
-        borderRadius:20,
+    learnMoreTitle: {
+      marginHorizontal: 20,
+    //   fontFamily: 'Lato-Bold',
+      fontSize: 24,
+      color: COLORS.black,
     },
-    learnText:{
-        color:COLORS.white,
-        fontSize:14,
-        fontWeight:'600',
-        alignItems:'center'
+    learnMoreItemsWrapper: {
+      paddingVertical: 20,
     },
-    learnWrapper:{
-        // marginTop:10
+    learnMoreItem: {
+      width: 170,
+      height: 180,
+      justifyContent: 'flex-end',
+      marginRight: 20,
     },
-    learnTitle:{
-        fontSize:24,
-        fontWeight:'600',
-        color:COLORS.black,
-        marginHorizontal:20,
-        alignItems:'center',
-        justifyContent:'center'
+    learnMoreItemImage: {
+      borderRadius: 20,
     },
-    learnItemWrapper:{
-        paddingVertical:20,
-        // marginHorizontal:20
+    learnMoreItemText: {
+    //   fontFamily: 'Lato-Bold',
+      fontSize: 18,
+      color: COLORS.white,
+      marginHorizontal: 10,
+      marginVertical: 20,
     },
-})
-export default Home
+  });
+  
+  export default Home;
