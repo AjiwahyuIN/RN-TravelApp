@@ -1,18 +1,11 @@
-import React from 'react'
-import { View, Text, SafeAreaView, StyleSheet, ImageBackground, Dimensions, TouchableOpacity } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
-import discoverData from '../../../assets/data/discoverData'
-import activitiesData from '../../../assets/data/activitiesData'
-import discoverCategoriesData from '../../../assets/data/discoverCategoriesData'
-import learnMoreData from '../../../assets/data/learnMoreData'
-
-import COLORS from '../../../colors'
-import Feather from 'react-native-vector-icons/Feather';
+import React from 'react';
+import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
+import Feather from 'react-native-vector-icons/Feather';
+import COLORS from '../../../colors';
 
-import {imageBig} from '../../../assets/images/kayak-big.png'
+
+
 
 Entypo.loadFont()
 Feather.loadFont()

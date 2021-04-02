@@ -1,17 +1,14 @@
-import React from 'react'
-import { View, Text, SafeAreaView, Button, ScrollView, StyleSheet, Image, FlatList, ImageBackground, TouchableOpacity } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
-import discoverData from '../../../assets/data/discoverData'
-import activitiesData from '../../../assets/data/activitiesData'
-import discoverCategoriesData from '../../../assets/data/discoverCategoriesData'
-import learnMoreData from '../../../assets/data/learnMoreData'
-
-import COLORS from '../../../colors'
-import profile from '../../../assets/images/person.png'
-import Feather from 'react-native-vector-icons/Feather';
+import React from 'react';
+import { FlatList, Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
+import Feather from 'react-native-vector-icons/Feather';
+import activitiesData from '../../../assets/data/activitiesData';
+import discoverData from '../../../assets/data/discoverData';
+import learnMoreData from '../../../assets/data/learnMoreData';
+import profile from '../../../assets/images/person.png';
+import COLORS from '../../../colors';
+
+
 
 Entypo.loadFont()
 Feather.loadFont()
